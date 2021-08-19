@@ -1,5 +1,5 @@
 {
-  "name": "my-org",
+  "name": "lem",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -45,7 +45,6 @@
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
     "@nrwl/cli": "12.7.1",
-    "@nrwl/cypress": "12.7.1",
     "@nrwl/eslint-plugin-nx": "12.7.1",
     "@nrwl/jest": "12.7.1",
     "@nrwl/linter": "12.7.1",
@@ -67,11 +66,9 @@
     "@typescript-eslint/parser": "~4.28.3",
     "babel-jest": "27.0.6",
     "babel-plugin-styled-components": "1.10.7",
-    "cypress": "^7.3.0",
     "dotenv": "~10.0.0",
     "eslint": "7.22.0",
     "eslint-config-prettier": "8.1.0",
-    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.23.1",

@@ -1,0 +1,10 @@
+FROM node:14-alpine
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install -g @nrwl/cli
+RUN npm install
+
+CMD nx run-many --target=serve --projects=api,ui --parallel
