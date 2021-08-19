@@ -1,0 +1,42 @@
+version: "3.8"
+
+networks:
+  corp:
+    driver: bridge
+
+services:
+  api:
+    container_name: api
+    build:
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
+      args:
+        NODE_ENV: "development"
+        BUILD_FLAG: ""
+    image: api:nx-dev
+    ports:
+      - 8080:8080
+    environment:
+      NODE_ENV: "development"
+      PORT: 8080
+    networks:
+      - corp
+    restart: on-failure
+
+  ui:
+    container_name: ui
+    build:
+      context: ./
+      dockerfile: ./apps/ui/Dockerfile
+      args:
+        NODE_ENV: "development"
+        BUILD_FLAG: ""
+    image: ui:nx-dev
+    ports:
+      - 4200:80
+    environment:
+      NODE_ENV: "development"
+      PORT: 4200
+    networks:
+      - corp
+    restart: on-failure
