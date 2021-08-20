@@ -17,6 +17,8 @@ services:
     volumes:
       - .:/app
     restart: on-failure
+    env_file: 
+      - ./apps/api/.env
   postgres:
     image: postgres:alpine
     restart: always
