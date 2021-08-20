@@ -5,7 +5,7 @@ WORKDIR /app
 COPY ./apps/ui/nginx.conf /etc/nginx/conf.d/default.conf
 COPY ./dist/apps/ui /usr/share/nginx/html
 
-ENV PORT=4200
+ENV PORT=3000
 EXPOSE ${PORT}
 
 CMD nginx -g 'daemon off;'

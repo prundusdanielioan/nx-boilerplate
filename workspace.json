@@ -6,12 +6,28 @@
       "sourceRoot": "apps/api/src",
       "projectType": "application",
       "targets": {
+        "docker": {
+          "executor": "@nx-tools/nx-docker:build",
+          "options": {
+            "file": "apps/api/Dockerfile",
+            "push": false,
+            "load": true,
+            "tags": ["lem/api-dev:latest"],
+            "target": "development"
+          },
+          "configurations": {
+            "production": {
+              "target": "production",
+              "tags": ["lem/api-prod:latest"]
+            }
+          }
+        },
         "deploy": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
               "nx run api:build",
-              "docker build -f ./apps/api/Dockerfile . -t api:dev --target development"
+              "nx run api:docker"
             ],
             "parallel": false
           },
@@ -19,7 +35,7 @@
             "production": {
               "commands": [
                 "nx run api:build:production",
-                "docker build -f ./apps/api/Dockerfile . -t api:prod --target production"
+                "nx run api:docker:production"
               ]
             }
           }
@@ -96,12 +112,21 @@
       "sourceRoot": "apps/ui/src",
       "projectType": "application",
       "targets": {
+        "docker": {
+          "executor": "@nx-tools/nx-docker:build",
+          "options": {
+            "file": "apps/ui/Dockerfile",
+            "push": false,
+            "load": true,
+            "tags": ["lem/ui:latest"]
+          }
+        },
         "deploy": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
               "nx run ui:build",
-              "docker build -f ./apps/ui/Dockerfile . -t ui"
+              "nx run ui:docker"
             ],
             "parallel": false
           }
@@ -151,7 +176,9 @@
           "options": {
             "buildTarget": "ui:build",
             "hmr": true,
-            "proxyConfig": "apps/ui/proxy.conf.json"
+            "proxyConfig": "apps/ui/proxy.conf.json",
+            "port": 3000,
+            "host": "0.0.0.0"
           },
           "configurations": {
             "production": {
@@ -178,9 +205,9 @@
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/nest"
+    "defaultCollection": "@nrwl/react"
   },
-  "defaultProject": "api",
+  "defaultProject": "ui",
   "generators": {
     "@nrwl/react": {
       "application": {

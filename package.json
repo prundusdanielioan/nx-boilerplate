@@ -54,6 +54,7 @@
     "@nrwl/tao": "12.7.1",
     "@nrwl/web": "12.7.1",
     "@nrwl/workspace": "12.7.1",
+    "@nx-tools/nx-docker": "^1.0.5",
     "@testing-library/react": "11.2.6",
     "@types/jest": "26.0.24",
     "@types/node": "14.14.33",

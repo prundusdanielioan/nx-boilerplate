@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY ./dist/apps/api .
 
-ENV PORT=3000
+ENV PORT=8080
 EXPOSE ${PORT}
 
 RUN npm install
@@ -13,7 +13,7 @@ FROM node:14-alpine as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
-ENV PORT=3000
+ENV PORT=8080
 EXPOSE ${PORT}
 
 WORKDIR /app
