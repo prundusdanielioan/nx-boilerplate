@@ -1,28 +1,25 @@
-FROM node:12.13-alpine As development
+FROM node:14-alpine as development
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY ./dist/apps/api .
 
-RUN npm install --only=development
+ENV PORT=3000
+EXPOSE ${PORT}
 
-COPY . .
+RUN npm install
 
-RUN npm run build
-
-FROM node:12.13-alpine as production
+FROM node:14-alpine as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+ENV PORT=3000
+EXPOSE ${PORT}
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY ./dist/apps/api .
 
 RUN npm install --only=production
 
-COPY . .
-
-COPY --from=development /usr/src/app/dist ./dist
-
-CMD ["node", "dist/main"]
+CMD ["node", "main"]

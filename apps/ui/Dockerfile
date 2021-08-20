@@ -1,13 +1,11 @@
-FROM node:14.16.1
+FROM nginx:1.21.1-alpine
 
 WORKDIR /app
 
-COPY package.json ./ 
+COPY ./apps/ui/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./dist/apps/ui /usr/share/nginx/html
 
-RUN npm install
+ENV PORT=4200
+EXPOSE ${PORT}
 
-COPY . .
-
-EXPOSE 4200
-
-CMD ["npm", "start"]`
+CMD nginx -g 'daemon off;'

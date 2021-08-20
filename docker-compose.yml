@@ -1,42 +1,20 @@
 version: "3.8"
 
-networks:
-  corp:
-    driver: bridge
-
 services:
-  api:
-    container_name: api
+  apps:
+    container_name: apps
     build:
-      context: ./
-      dockerfile: ./apps/api/Dockerfile
-      args:
-        NODE_ENV: "development"
-        BUILD_FLAG: ""
-    image: api:nx-dev
+      context: .
+      dockerfile: Dockerfile.local
     ports:
-      - 8080:8080
-    environment:
-      NODE_ENV: "development"
-      PORT: 8080
+      - 3000:3000
+      - 9229:9229
+      - 4200:4200
     networks:
-      - corp
+      - lem-network
+    volumes:
+      - .:/app
     restart: on-failure
 
-  ui:
-    container_name: ui
-    build:
-      context: ./
-      dockerfile: ./apps/ui/Dockerfile
-      args:
-        NODE_ENV: "development"
-        BUILD_FLAG: ""
-    image: ui:nx-dev
-    ports:
-      - 4200:80
-    environment:
-      NODE_ENV: "development"
-      PORT: 4200
-    networks:
-      - corp
-    restart: on-failure
+networks:
+    lem-network:
