@@ -23,12 +23,9 @@
           }
         },
         "deploy": {
-          "builder": "@nrwl/workspace:run-commands",
+          "executor": "@nrwl/workspace:run-commands",
           "options": {
-            "commands": [
-              "nx run api:build",
-              "nx run api:docker"
-            ],
+            "commands": ["nx run api:build", "nx run api:docker"],
             "parallel": false
           },
           "configurations": {
@@ -122,12 +119,9 @@
           }
         },
         "deploy": {
-          "builder": "@nrwl/workspace:run-commands",
+          "executor": "@nrwl/workspace:run-commands",
           "options": {
-            "commands": [
-              "nx run ui:build",
-              "nx run ui:docker"
-            ],
+            "commands": ["nx run ui:build", "nx run ui:docker"],
             "parallel": false
           }
         },

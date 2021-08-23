@@ -1,88 +1,29 @@
+## 1. Structure
+- **/apps**
+  - **/api** - NestJS project, the BackEnd API of the application.
+  - **/ui** - ReactJS project, the FrontEnd of the application. 
+- **/libs** - common shared libraries (interfaces, models, utilities) used by both BE and FE
+- **/tools** - custom utility functions for the CLI commands
+## 2. Get Started
+### Local development
+Run ```docker compose up``` in the root folder. Your apps will start in parallel, including any dependencies. You can then access them, the FE at [localhost:3000](http://localhost:3000) and the BE at [localhost:8080](http://localhost:8080). Hot reload will be enabled for both apps.
 
+Both apps use Typescript and linting rules, configured in ```.eslintcrc.json```
 
-# MyOrg
+For unit tests, the default preset is Jest library.
 
-This project was generated using [Nx](https://nx.dev).
+Useful tips:
+- use ```workspace.json``` to configure additional cli commands
+- it is reccommended to install nx globally, to avoid prepending npx to each command. To do so, run: ```npm i -g nx```
+- to generate FE resources, use the built in nx [React Generator](https://nx.dev/latest/react/react/overview)
+  - eg for a new component generation: ```nx generate component <component-name> --project=ui```
+- to generate BE resources, use the build in nx [NestJS Generator](https://nx.dev/latest/react/nest/overview)
+  - note: the React generator is the default generator
+  - to use the NestJS generator, you need to explicitly pass it to the command, eg: ```nx generate @nrwl/nest:controller --name=<controller-name> --project=api```
+- the React app is styled using Styled Components
+- when running the app locally, it automatically uses a proxy for localhost:8080 as /api. We can leverage ui/environments/environment.ts to determine if the app is run locally, and decide upon using an env var to point to the BE url for other environments
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
-
-🔎 **Smart, Extensible Build Framework**
-
-## Adding capabilities to your workspace
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@lem/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:3000/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+### BE Docker Image
+Build the image using ```nx run api:docker``` and ```nx run api:deploy:production```, this will generate the docker image you can then run using ```docker run -it --rm -p 8080:8080 lem\api-prod```
+### FE Docker Image
+Build the image using ```nx run ui:deploy``` and then run the resulting image with ```docker run -it --rm -p 3000:3000 lem\ui```
